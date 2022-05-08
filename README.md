@@ -1,4 +1,4 @@
-## Rfetch
+## rtfetch
 
 ![screen](./img.png)
 

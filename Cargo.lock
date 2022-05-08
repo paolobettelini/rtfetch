@@ -212,7 +212,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rfetch"
+name = "rtfetch"
 version = "0.1.0"
 dependencies = [
  "color-print",
