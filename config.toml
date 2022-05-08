@@ -1,0 +1,10 @@
+logo = "arch"
+info = [
+    "",
+    "",
+    "<yellow>%host_name%@paolo",
+    "",
+    "<yellow>OS:<white> %os_version%",
+    "<yellow>Kernel:<white> %kernel_version%",
+    "<yellow>Memory: %total_memory% kB"
+]
