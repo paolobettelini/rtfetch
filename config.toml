@@ -2,6 +2,7 @@ logo = "arch_thick.logo"
 info = [
     "",
     "",
+    "",
     "<yellow>{host_name}@{host_name}",
     "",
     "<yellow><bold>System</bold>: <white>{system_name}",

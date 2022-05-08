@@ -12,9 +12,8 @@ struct Config {
     info: Vec<String>
 }
 
-fn main() {
-    println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=config.toml");
+fn main() { 
+    println!("cargo:rerun-if-changed=../config.toml");
 
     let mut config: Config = toml::from_str(include_str!("../config.toml")).unwrap();
 
@@ -23,6 +22,7 @@ fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest_path = Path::new(&out_dir).join("result.rs");
     generate_file(&dest_path, result.as_bytes());
+    let a = 3;
 }
 
 fn get_result(config: &mut Config) -> String {
