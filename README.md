@@ -8,7 +8,7 @@ Recompile each time you change the
 [config file](./config.toml)
 
 ```toml
-logo = "arch" # in src/assets. Must have ".logo" extension
+logo = "arch.logo" # in src/assets.
 info = [
     "",
     "",

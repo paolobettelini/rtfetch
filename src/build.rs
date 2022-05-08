@@ -26,7 +26,7 @@ fn main() {
 }
 
 fn get_result(config: &mut Config) -> String {
-    let logo = fs::read_to_string(format!("src/assets/{}.logo", config.logo)).expect("Unable to read logo");
+    let logo = fs::read_to_string(format!("src/assets/{}", config.logo)).expect("Unable to read logo");
 
     let mut art_lines = logo.split('\n').collect::<Vec<&str>>();
 
