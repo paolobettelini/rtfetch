@@ -59,14 +59,14 @@ fn get_result(config: &mut Config) -> String {
     }
 
     // extend to same length if needed
-    let diff = logo.len() as i32 - config.info.len() as i32;
+    let diff = art_lines.len() as i32 - config.info.len() as i32;
     if diff > 0 {
         for _ in 0..diff {
             config.info.push("".to_string());
         }
     } else if diff < 0 {
-        for _ in 0..diff {
-            art_lines.push("");
+        for _ in 0..-diff {
+            art_lines.push("SSS");
         }
     }
 

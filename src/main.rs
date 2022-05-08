@@ -1,7 +1,7 @@
 use sysinfo::{{System, SystemExt}};
 
 fn main() {
-    let mut sys = System::new_all();
+    let sys = System::new_all();
 
     let host_name = sys.host_name().unwrap();
     let total_memory = sys.total_memory();
