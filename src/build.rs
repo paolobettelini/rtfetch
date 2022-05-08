@@ -38,10 +38,10 @@ fn get_result(config: &mut Config) -> String {
         for c in line.chars() {
             if c == '{' {
                 counter += 1;
-                continue;
-            }
-
-            if c == '}' {
+                if counter == 1 {
+                    continue;
+                }
+            } else if c == '}' {
                 counter -= 1;
 
                 if counter == 0 {
@@ -50,8 +50,6 @@ fn get_result(config: &mut Config) -> String {
                         variable = "".to_owned();
                     }
                 }
-
-                continue;
             }
 
             if counter > 0 {
