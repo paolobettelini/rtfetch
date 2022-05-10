@@ -22,7 +22,6 @@ fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest_path = Path::new(&out_dir).join("result.rs");
     generate_file(&dest_path, result.as_bytes());
-    let a = 3;
 }
 
 fn get_result(config: &mut Config) -> String {
@@ -66,7 +65,7 @@ fn get_result(config: &mut Config) -> String {
         }
     } else if diff < 0 {
         for _ in 0..-diff {
-            art_lines.push("SSS");
+            art_lines.push("");
         }
     }
 
