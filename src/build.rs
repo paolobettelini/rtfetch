@@ -69,6 +69,8 @@ fn get_result(config: &mut Config) -> String {
         }
     }
 
+    align_spaces_right(&mut art_lines);
+
     let info_iter = config.info.iter();
     let art_iter = art_lines.iter();
 
@@ -109,11 +111,22 @@ fn generate_file<P: AsRef<Path>>(path: P, text: &[u8]) {
     f.write_all(text).unwrap()
 }
 
-/*
+fn align_spaces_right(lines: &mut Vec<&str>) {
+    let mut max_length: usize = 0;
 
+    for line in lines.into_iter() {
+        if line.len() > max_length {
+            max_length = line.len();
+        }
+    }
 
-struct Stats {
-    informations: Vec<Box<dyn Information>>,
+    // for line in lines.into_iter() {
+    //     let diff =  max_length - line.len();
+    //     if diff != 0 {
+    //         for _ in 0..diff {
+    //             let new_v = format!("{}{}", line, " ");
+    //             *line = &new_v;
+    //         }
+    //     }
+    // }
 }
-
-*/
