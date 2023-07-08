@@ -9,22 +9,49 @@ use serde_derive::Deserialize;
 #[derive(Deserialize)]
 struct Config {
     logo: String,
-    info: Vec<String>
+    setup: Vec<String>,
+    info: Vec<String>,
 }
 
 fn main() { 
-    println!("cargo:rerun-if-changed=../config.toml");
+    println!("cargo:rerun-if-changed=../Fetch.toml");
 
-    let mut config: Config = toml::from_str(include_str!("../config.toml")).unwrap();
+    let mut config: Config = toml::from_str(include_str!("../Fetch.toml")).unwrap();
 
-    let result = get_result(&mut config);
+    let code = generate_code(&mut config);
 
     let out_dir = env::var("OUT_DIR").unwrap();
+    
     let dest_path = Path::new(&out_dir).join("result.rs");
-    generate_file(&dest_path, result.as_bytes());
+    generate_file(&dest_path, code.as_bytes());
 }
 
-fn get_result(config: &mut Config) -> String {
+fn generate_code(config: &mut Config) -> String {
+    let info_code = generate_string_to_print(config);
+
+    let mut result = String::new();
+    
+    // wrap everything in an expression
+    // because you can only include! a single expression
+    result.push('{');
+    result.push('\n');
+
+    for string in &config.setup {
+        result.push_str("    ");
+        result.push_str(&string);
+        result.push('\n');
+    }
+
+    result.push_str(&format!("    let result = {};\n", info_code));
+    result.push_str("    println!(\"{}\", result);\n");
+
+    result.push('}');
+    result.push('\n');
+
+    result
+}
+
+fn generate_string_to_print(config: &mut Config) -> String {
     let logo = fs::read_to_string(format!("src/assets/{}", config.logo)).expect("Unable to read logo");
 
     let mut art_lines = logo.split('\n').collect::<Vec<&str>>();
@@ -69,8 +96,6 @@ fn get_result(config: &mut Config) -> String {
         }
     }
 
-    align_spaces_right(&mut art_lines);
-
     let info_iter = config.info.iter();
     let art_iter = art_lines.iter();
 
@@ -109,24 +134,4 @@ fn as_params(lines: &Vec<String>) -> String {
 fn generate_file<P: AsRef<Path>>(path: P, text: &[u8]) {
     let mut f = File::create(path).unwrap();
     f.write_all(text).unwrap()
-}
-
-fn align_spaces_right(lines: &mut Vec<&str>) {
-    let mut max_length: usize = 0;
-
-    for line in lines.into_iter() {
-        if line.len() > max_length {
-            max_length = line.len();
-        }
-    }
-
-    // for line in lines.into_iter() {
-    //     let diff =  max_length - line.len();
-    //     if diff != 0 {
-    //         for _ in 0..diff {
-    //             let new_v = format!("{}{}", line, " ");
-    //             *line = &new_v;
-    //         }
-    //     }
-    // }
 }

@@ -1,17 +1,17 @@
-use sysinfo::{{System, SystemExt}};
+use std::process::Command;
+use sysinfo::{System, SystemExt};
 
 fn main() {
-    let sys = System::new_all();
+    include!(concat!(env!("OUT_DIR"), "/result.rs"));
+}
 
-    let host_name = sys.host_name().expect("Not Found");
-    let total_memory = sys.total_memory();
-    let used_memory = sys.used_memory();
-    let kernel_version = sys.kernel_version().expect("Not Found");
-    let os_version = sys.os_version().expect("Not Found");
-    let uptime = sys.uptime();
-    let cores = sys.physical_core_count().expect("Not Found");
-    let system_name = sys.name().expect("Not Found");
+/// Useful function
+fn bash(cmd: &str) -> String {
+    let output = Command::new("bash")
+        .arg("-c")
+        .arg(cmd)
+        .output()
+        .expect("Failed to execute command");
 
-    let result = include!(concat!(env!("OUT_DIR"), "/result.rs"));
-    println!("{}", result);
+    String::from_utf8_lossy(&output.stdout).trim().to_string()
 }
